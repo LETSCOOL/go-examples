@@ -1,7 +1,7 @@
 package main
 
 import (
-	. "github.com/letscool/dij-gin/executor"
+	. "github.com/letscool/dij-gin"
 	"log"
 	"net/http"
 	"reflect"
