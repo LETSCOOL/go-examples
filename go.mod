@@ -8,7 +8,7 @@ go 1.19
 
 require github.com/letscool/dij-gin v0.0.2
 
-require github.com/letscool/lc-go v0.0.4
+require github.com/letscool/lc-go v0.0.6
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
