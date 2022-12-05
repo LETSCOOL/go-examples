@@ -9,7 +9,6 @@ import (
 	. "github.com/letscool/dij-gin"
 	"log"
 	"net/http"
-	"reflect"
 )
 
 type TWebServer struct {
@@ -17,20 +16,20 @@ type TWebServer struct {
 }
 
 // GetHello a http request with "get" method.
-// Url should like this in local: http://localhost:8000/hello?name=wayne&age=123
+// Url should like this in local: http://localhost:8000/hello?name=wayne&age=123.
+// The result will be:
+//
+//	"/hello wayne, 123 years old"
 func (s *TWebServer) GetHello(ctx struct {
 	WebContext
-	name string
-	age  int
+	Name string `http:"name"`
+	Age  int    `http:"age"`
 }) {
-	//fmt.Printf("%s", ctx.Query("name"))
-	ctx.IndentedJSON(http.StatusOK, fmt.Sprintf("/hello %s, %d years old", ctx.name, ctx.age))
+	ctx.IndentedJSON(http.StatusOK, fmt.Sprintf("/hello %s, %d years old", ctx.Name, ctx.Age))
 }
 
 func main() {
-	wsTyp := reflect.TypeOf(TWebServer{})
-	//dij.EnableLog()
-	if err := LaunchGin(wsTyp); err != nil {
+	if err := LaunchGin(&TWebServer{}); err != nil {
 		log.Fatalln(err)
 	}
 }

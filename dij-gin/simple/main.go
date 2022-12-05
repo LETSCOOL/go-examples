@@ -8,7 +8,6 @@ import (
 	. "github.com/letscool/dij-gin"
 	"log"
 	"net/http"
-	"reflect"
 )
 
 type TWebServer struct {
@@ -22,9 +21,8 @@ func (s *TWebServer) GetHello(ctx WebContext) {
 }
 
 func main() {
-	wsTyp := reflect.TypeOf(TWebServer{})
 	//dij.EnableLog()
-	if err := LaunchGin(wsTyp); err != nil {
+	if err := LaunchGin(&TWebServer{}); err != nil {
 		log.Fatalln(err)
 	}
 }
