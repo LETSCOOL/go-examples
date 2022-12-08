@@ -6,9 +6,9 @@ module github.com/letscool/go-examples
 
 go 1.19
 
-require github.com/letscool/dij-gin v0.0.3
+require github.com/letscool/dij-gin v0.0.4
 
-require github.com/letscool/lc-go v0.0.9
+require github.com/letscool/lc-go v0.1.0
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
