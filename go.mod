@@ -6,13 +6,15 @@ module github.com/letscool/go-examples
 
 go 1.19
 
-require github.com/letscool/dij-gin v0.0.4
-
-require github.com/letscool/lc-go v0.1.0
+require (
+	github.com/gin-gonic/gin v1.8.1
+	github.com/letscool/dij-gin v0.0.6
+	github.com/letscool/lc-go v0.1.0
+)
 
 require (
+	github.com/gin-contrib/cors v1.4.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.8.1 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
