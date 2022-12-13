@@ -13,8 +13,8 @@ import (
 
 type TWebServer struct {
 	WebServer
-
-	_ *TUserController `di:""`
+	_ *libs.SwaggerController `di:""` // Bind OpenApi controller in root.
+	_ *TUserController        `di:""`
 }
 
 type TUserController struct {
@@ -27,7 +27,7 @@ type TUserController struct {
 // Url should like this in local: http://localhost:8000/user/me.
 // And login with username "john" and password "abc".
 func (u *TUserController) GetMe(ctx struct {
-	WebContext `http:",middleware=basic_auth"`
+	WebContext `http:",middleware=basic_auth" security:"basic_auth_1"`
 }) (result struct {
 	Account *shared.Account `http:"200,json"`
 }) {
@@ -39,7 +39,11 @@ func main() {
 	ac := &shared.FakeAccountDb{} // This object should implement libs.AccountForBasicAuth interface.
 	ac.InitFakeDb()
 	config := NewWebConfig().
-		SetDependentRef(libs.RefKeyForBasicAuthAccountCenter, ac)
+		SetDependentRef(libs.RefKeyForBasicAuthAccountCenter, ac).
+		SetOpenApi(func(o *OpenApiConfig) {
+			o.Enable().UseHttpOnly().SetDocPath("doc").
+				AppendBasicAuth("basic_auth_1")
+		})
 	if err := LaunchGin(&TWebServer{}, config); err != nil {
 		log.Fatalln(err)
 	}
