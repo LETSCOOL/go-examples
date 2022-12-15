@@ -20,7 +20,7 @@ type TWebServer struct {
 type TUserController struct {
 	WebController `http:"user"`
 
-	_ *libs.BasicAuthMiddleware `di:""`
+	_ *shared.BasicAuthMiddleware `di:""`
 }
 
 // GetMe a http request with "get" method.
@@ -31,15 +31,15 @@ func (u *TUserController) GetMe(ctx struct {
 }) (result struct {
 	Account *shared.Account `http:"200,json"`
 }) {
-	result.Account = ctx.MustGet(libs.BasicAuthUserKey).(*shared.Account)
+	result.Account = ctx.MustGet(shared.BasicAuthUserKey).(*shared.Account)
 	return
 }
 
 func main() {
-	ac := &shared.FakeAccountDb{} // This object should implement libs.AccountForBasicAuth interface.
+	ac := &shared.FakeAccountDb{} // This object should implement shared.BasicAuthAccountCenter interface.
 	ac.InitFakeDb()
 	config := NewWebConfig().
-		SetDependentRef(libs.RefKeyForBasicAuthAccountCenter, ac).
+		SetDependentRef(shared.RefKeyForBasicAuthAccountCenter, ac).
 		SetOpenApi(func(o *OpenApiConfig) {
 			o.Enable().UseHttpOnly().SetDocPath("doc").
 				AppendBasicAuth("basic_auth_1")
