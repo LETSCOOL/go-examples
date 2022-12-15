@@ -37,6 +37,7 @@ func (b *BearerMiddleware) ParseBearerHeader(ctx struct {
 }) {
 	authorization := ctx.GetRequestHeader("Authorization")
 	if !strings.HasPrefix(authorization, "Bearer ") {
+		log.Printf("Invalid bearer header: %s", authorization)
 		ctx.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}

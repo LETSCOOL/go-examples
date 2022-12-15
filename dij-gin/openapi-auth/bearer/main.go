@@ -39,9 +39,11 @@ func (u *TUserController) GetMe(ctx struct {
 }
 
 func main() {
+	// a fake account db
 	ac := &shared.FakeAccountDb{} // This object must implement shared.BearerValidator interface.
 	accounts := ac.InitFakeDb()
-	// generate a jwt token for test
+	// generate a jwt token for test.
+	// this is for test only, the production should another way to get token.
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.RegisteredClaims{
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(5 * time.Minute)),
 		IssuedAt:  jwt.NewNumericDate(time.Now()),
@@ -58,7 +60,7 @@ func main() {
 		fmt.Printf("Bearer token: %s\n", tokenString)
 		fmt.Println("*************************")
 	}
-	//
+	// launch a web server
 	config := NewWebConfig().
 		SetDependentRef(shared.RefKeyForBearerValidator, ac).
 		SetOpenApi(func(o *OpenApiConfig) {
